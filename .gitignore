@@ -1,0 +1,22 @@
+# Backend
+backend/.venv/
+backend/.venv311/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.db
+backend/.env
+backend/.pytest_cache/
+backend/*.log
+backend/_verify_*.py
+
+# Mobile
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/.env
+mobile/android/
+mobile/ios/
+
+.DS_Store
+Thumbs.db
+*.pyc

@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: lexishelf-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      # Use an external managed Postgres (e.g. Neon) — Render's free tier has no persistent disk,
+      # and its own free Postgres expires after 30 days. Paste the connection string in the dashboard.
+      - key: DATABASE_URL
+        sync: false
+      - key: APP_WEB_URL
+        sync: false
+      - key: JWT_SIGNING_SECRET
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-20b
+      - key: GROQ_AGENT_MODEL
+        value: qwen/qwen3.8-27b
+      - key: NOTION_CLIENT_ID
+        sync: false
+      - key: NOTION_CLIENT_SECRET
+        sync: false
+      - key: NOTION_REDIRECT_URI
+        sync: false
+      - key: NOTION_OAUTH_STATE_SECRET
+        sync: false
+      - key: NOTION_TOKEN_ENCRYPTION_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        sync: false
