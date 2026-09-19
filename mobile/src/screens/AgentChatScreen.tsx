@@ -21,6 +21,7 @@ import { getApiErrorMessage } from "@/api/client";
 import { collectionsApi } from "@/api/collections";
 import { telegramApi } from "@/api/telegram";
 import { AnimatedPressable } from "@/components/AnimatedPressable";
+import { MarkdownText } from "@/components/MarkdownText";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { AgentAction, Collection } from "@/types";
 
@@ -146,7 +147,9 @@ export function AgentChatScreen() {
                 : { backgroundColor: colors.surface, alignSelf: "flex-start", borderColor: colors.border, borderWidth: 1 },
             ]}
           >
-            <Text style={{ color: item.role === "user" ? colors.onPrimary : colors.text, lineHeight: 20 }}>{item.text}</Text>
+            <MarkdownText style={{ color: item.role === "user" ? colors.onPrimary : colors.text, lineHeight: 20 }}>
+              {item.text}
+            </MarkdownText>
             {item.actions?.map((action, index) => (
               <View key={`${action.type}-${index}`} style={[styles.actionRow, { borderTopColor: colors.border }]}>
                 <Text style={{ color: action.status === "success" ? colors.primary : colors.danger, fontSize: 12, fontWeight: "700" }}>

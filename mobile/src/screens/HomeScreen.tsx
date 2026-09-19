@@ -11,6 +11,7 @@ import { AnimatedFadeIn } from "@/components/AnimatedFadeIn";
 import { CollectionCard } from "@/components/CollectionCard";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { Collection } from "@/types";
+import { syncReviewReminder } from "@/utils/notifications";
 
 export function HomeScreen() {
   const colors = useThemeColors();
@@ -31,7 +32,12 @@ export function HomeScreen() {
         setError(getApiErrorMessage(loadError, "Could not load your shelves."));
       })
       .finally(() => setIsLoading(false));
-    vocabularyApi.listDueForReview(100).then((entries) => setDueCount(entries.length)).catch(() => setDueCount(0));
+    vocabularyApi.listDueForReview(100)
+      .then((entries) => {
+        setDueCount(entries.length);
+        void syncReviewReminder(entries.length);
+      })
+      .catch(() => setDueCount(0));
   }, []);
 
   useFocusEffect(useCallback(() => { load(); }, [load]));

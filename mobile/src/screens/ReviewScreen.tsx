@@ -6,6 +6,7 @@ import Animated, { FadeInUp, ZoomOut } from "react-native-reanimated";
 
 import { getApiErrorMessage } from "@/api/client";
 import { vocabularyApi } from "@/api/vocabulary";
+import { MarkdownText } from "@/components/MarkdownText";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { speakText } from "@/utils/speech";
 import { VocabularyEntry } from "@/types";
@@ -118,19 +119,19 @@ export function ReviewScreen() {
               {current.simple_explanation ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>Simple meaning</Text>
-                  <Text style={[styles.detailBody, { color: colors.text }]}>{current.simple_explanation}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text }]}>{current.simple_explanation}</MarkdownText>
                 </View>
               ) : null}
               {current.meaning ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>Meaning</Text>
-                  <Text style={[styles.detailBody, { color: colors.text }]}>{current.meaning}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text }]}>{current.meaning}</MarkdownText>
                 </View>
               ) : null}
               {current.example ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>Example</Text>
-                  <Text style={[styles.detailBody, { color: colors.text, fontStyle: "italic" }]}>{current.example}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text, fontStyle: "italic" }]}>{current.example}</MarkdownText>
                 </View>
               ) : null}
               {current.synonyms.length ? (

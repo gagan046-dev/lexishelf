@@ -19,6 +19,7 @@ import { collectionsApi } from "@/api/collections";
 import { getApiErrorMessage } from "@/api/client";
 import { vocabularyApi } from "@/api/vocabulary";
 import { AnimatedPressable } from "@/components/AnimatedPressable";
+import { MarkdownText } from "@/components/MarkdownText";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { speakText } from "@/utils/speech";
 import { Collection, VocabularyExplanation } from "@/types";
@@ -253,25 +254,25 @@ export function SearchScreen() {
 
           <View style={[styles.primaryMeaning, { backgroundColor: colors.surfaceElevated }]}>
             <Text style={[styles.label, { color: colors.muted }]}>In plain English</Text>
-            <Text style={[styles.primaryMeaningText, { color: colors.text }]}>{explanation.simple_meaning}</Text>
+            <MarkdownText style={[styles.primaryMeaningText, { color: colors.text }]}>{explanation.simple_meaning}</MarkdownText>
           </View>
 
           {explanation.contextual_meaning ? (
             <View style={[styles.contextBlock, { borderLeftColor: colors.primary }]}>
               <Text style={[styles.label, { color: colors.muted }]}>In this context</Text>
-              <Text style={[styles.body, styles.compactBody, { color: colors.text }]}>{explanation.contextual_meaning}</Text>
+              <MarkdownText style={[styles.body, styles.compactBody, { color: colors.text }]}>{explanation.contextual_meaning}</MarkdownText>
             </View>
           ) : null}
 
           {difficulty !== "simple" ? (
             <>
               <Text style={[styles.label, { color: colors.muted }]}>Dictionary meaning</Text>
-              <Text style={[styles.body, { color: colors.text }]}>{explanation.meaning}</Text>
+              <MarkdownText style={[styles.body, { color: colors.text }]}>{explanation.meaning}</MarkdownText>
             </>
           ) : null}
 
           <Text style={[styles.label, { color: colors.muted }]}>Example</Text>
-          <Text style={[styles.body, styles.example, { color: colors.text, borderLeftColor: colors.primary }]}>{explanation.example}</Text>
+          <MarkdownText style={[styles.body, styles.example, { color: colors.text, borderLeftColor: colors.primary }]}>{explanation.example}</MarkdownText>
 
           {explanation.synonyms.length ? (
             <>
@@ -290,7 +291,7 @@ export function SearchScreen() {
           {explanation.usage_note ? (
             <View style={[styles.usageNote, { borderColor: colors.border }]}>
               <Ionicons name="bulb-outline" size={17} color={colors.primary} />
-              <Text style={[styles.usageNoteText, { color: colors.muted }]}>{explanation.usage_note}</Text>
+              <MarkdownText style={[styles.usageNoteText, { color: colors.muted }]}>{explanation.usage_note}</MarkdownText>
             </View>
           ) : null}
 

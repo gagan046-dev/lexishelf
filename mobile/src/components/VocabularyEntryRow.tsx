@@ -5,6 +5,7 @@ import Animated, { Layout, ZoomOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 
 import { ConfirmModal } from "@/components/ConfirmModal";
+import { MarkdownText } from "@/components/MarkdownText";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { speakText } from "@/utils/speech";
 import { VocabularyEntry } from "@/types";
@@ -85,25 +86,25 @@ export function VocabularyEntryRow({ entry, onDelete }: Props) {
               {entry.simple_explanation ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>Simple meaning</Text>
-                  <Text style={[styles.detailBody, { color: colors.text }]}>{entry.simple_explanation}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text }]}>{entry.simple_explanation}</MarkdownText>
                 </View>
               ) : null}
               {entry.meaning ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>Meaning</Text>
-                  <Text style={[styles.detailBody, { color: colors.text }]}>{entry.meaning}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text }]}>{entry.meaning}</MarkdownText>
                 </View>
               ) : null}
               {entry.contextual_explanation ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>In this context</Text>
-                  <Text style={[styles.detailBody, { color: colors.text }]}>{entry.contextual_explanation}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text }]}>{entry.contextual_explanation}</MarkdownText>
                 </View>
               ) : null}
               {entry.usage_note ? (
                 <View style={styles.detailSection}>
                   <Text style={[styles.detailLabel, { color: colors.muted }]}>Usage note</Text>
-                  <Text style={[styles.detailBody, { color: colors.text }]}>{entry.usage_note}</Text>
+                  <MarkdownText style={[styles.detailBody, { color: colors.text }]}>{entry.usage_note}</MarkdownText>
                 </View>
               ) : null}
             </>
