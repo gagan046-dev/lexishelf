@@ -13,22 +13,22 @@ def create_notion_oauth_state(
     secret: str,
     algorithm: str,
     expires_minutes: int = 10,
+    return_to: str | None = None,
 ) -> str:
     if not secret:
         raise NotionOAuthStateError("Notion OAuth state secret is not configured")
-    return jwt.encode(
-        {
-            "sub": user_id,
-            "purpose": "notion_oauth",
-            "nonce": secrets.token_urlsafe(24),
-            "exp": datetime.now(timezone.utc) + timedelta(minutes=expires_minutes),
-        },
-        secret,
-        algorithm=algorithm,
-    )
+    payload = {
+        "sub": user_id,
+        "purpose": "notion_oauth",
+        "nonce": secrets.token_urlsafe(24),
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=expires_minutes),
+    }
+    if return_to:
+        payload["return_to"] = return_to
+    return jwt.encode(payload, secret, algorithm=algorithm)
 
 
-def read_notion_oauth_state(state: str, secret: str, algorithm: str) -> str:
+def read_notion_oauth_state(state: str, secret: str, algorithm: str) -> tuple[str, str | None]:
     try:
         payload = jwt.decode(state, secret, algorithms=[algorithm])
     except JWTError as exc:
@@ -37,4 +37,4 @@ def read_notion_oauth_state(state: str, secret: str, algorithm: str) -> str:
     user_id = payload.get("sub")
     if payload.get("purpose") != "notion_oauth" or not user_id:
         raise NotionOAuthStateError("Notion OAuth state is invalid or expired")
-    return user_id
+    return user_id, payload.get("return_to")

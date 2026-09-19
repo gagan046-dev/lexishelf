@@ -48,8 +48,18 @@ def get_notion_oauth_service() -> NotionOAuthService:
     )
 
 
+def _is_allowed_return_to(value: str, app_web_url: str) -> bool:
+    if not value:
+        return False
+    if value == app_web_url.rstrip("/"):
+        return True
+    # Native deep links only: our own custom scheme, or Expo Go's dev-client scheme.
+    return value.startswith("lexishelf://") or value.startswith("exp://")
+
+
 @router.get("/oauth/authorize", response_model=NotionAuthorizationUrl)
 def authorize_notion(
+    return_to: Optional[str] = None,
     user_id: str = Depends(get_current_user_id),
 ):
     settings = get_settings()
@@ -62,12 +72,16 @@ def authorize_notion(
             },
         )
 
+    validated_return_to = (
+        return_to if return_to and _is_allowed_return_to(return_to, settings.app_web_url) else None
+    )
     state_secret = settings.notion_oauth_state_secret or settings.jwt_signing_secret
     try:
         state_token = create_notion_oauth_state(
             user_id,
             state_secret,
             settings.jwt_algorithm,
+            return_to=validated_return_to,
         )
     except NotionOAuthStateError as exc:
         raise HTTPException(
@@ -114,7 +128,7 @@ def notion_oauth_callback(
     settings = get_settings()
     state_secret = settings.notion_oauth_state_secret or settings.jwt_signing_secret
     try:
-        user_id = read_notion_oauth_state(state_token, state_secret, settings.jwt_algorithm)
+        user_id, return_to = read_notion_oauth_state(state_token, state_secret, settings.jwt_algorithm)
     except NotionOAuthStateError as exc:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -154,7 +168,7 @@ def notion_oauth_callback(
         workspace_icon=credentials.workspace_icon,
     )
     session.commit()
-    app_url = json.dumps(settings.app_web_url.rstrip("/"))
+    app_url = json.dumps(return_to or settings.app_web_url.rstrip("/"))
     workspace_name = escape(connection.workspace_name)
     return HTMLResponse(
         content=f"""<!doctype html>

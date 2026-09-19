@@ -13,7 +13,10 @@ type NotionPageSearchResult = {
 };
 
 export const notionApi = {
-  authorizationUrl: () => api.get<{ authorization_url: string }>("/api/v1/notion/oauth/authorize"),
+  authorizationUrl: (returnTo?: string) =>
+    api.get<{ authorization_url: string }>(
+      `/api/v1/notion/oauth/authorize${returnTo ? `?return_to=${encodeURIComponent(returnTo)}` : ""}`,
+    ),
   searchPages: (query = "") =>
     api.get<NotionPageSearchResult>(`/api/v1/notion/pages/search?query=${encodeURIComponent(query)}`),
 };

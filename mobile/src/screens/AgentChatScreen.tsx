@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -10,6 +12,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -17,6 +20,7 @@ import { chatApi } from "@/api/chat";
 import { getApiErrorMessage } from "@/api/client";
 import { collectionsApi } from "@/api/collections";
 import { telegramApi } from "@/api/telegram";
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { AgentAction, Collection } from "@/types";
 
@@ -29,6 +33,7 @@ type ChatMessage = {
 
 export function AgentChatScreen() {
   const colors = useThemeColors();
+  const insets = useSafeAreaInsets();
   const listRef = useRef<FlatList<ChatMessage>>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
@@ -73,7 +78,11 @@ export function AgentChatScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container, { paddingTop: insets.top + 20 }]}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? insets.bottom : 0}
+    >
       <View style={styles.headerRow}>
         <View style={styles.headerCopy}>
           <Text style={[styles.header, { color: colors.text }]}>Agent Chat</Text>
@@ -175,22 +184,19 @@ export function AgentChatScreen() {
           style={[styles.input, { backgroundColor: colors.surface, color: colors.text, borderColor: colors.border }]}
           returnKeyType="send"
         />
-        <Pressable
+        <AnimatedPressable
           accessibilityLabel="Send message"
           accessibilityRole="button"
           disabled={!draft.trim() || isSending}
           onPress={() => void send()}
-          style={({ pressed }) => [
-            styles.sendButton,
-            { backgroundColor: colors.primary, opacity: !draft.trim() || isSending ? 0.4 : pressed ? 0.75 : 1 },
-          ]}
+          style={[styles.sendButton, { backgroundColor: colors.primary, opacity: !draft.trim() || isSending ? 0.4 : 1 }]}
         >
           <Text style={[styles.sendButtonText, { color: colors.onPrimary }]}>Send</Text>
-        </Pressable>
+        </AnimatedPressable>
       </View>
 
       <TelegramLinkModal visible={isTelegramModalOpen} onClose={() => setIsTelegramModalOpen(false)} />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -245,7 +251,7 @@ function TelegramLinkModal({ visible, onClose }: { visible: boolean; onClose: ()
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, paddingTop: 60 },
+  container: { flex: 1, padding: 20 },
   headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
   headerCopy: { flex: 1, marginRight: 12 },
   telegramButton: { width: 38, height: 38, borderWidth: 1, borderRadius: 8, alignItems: "center", justifyContent: "center" },

@@ -1,0 +1,45 @@
+﻿{
+  "id": "497a545c-4b89-49dd-a8ad-eb6898755c1b",
+  "status": "ERRORED",
+  "platform": "ANDROID",
+  "error": {
+    "errorCode": "EAS_BUILD_UNKNOWN_GRADLE_ERROR",
+    "message": "Gradle build failed with unknown error. See logs for the \"Run gradlew\" phase for more information."
+  },
+  "artifacts": {},
+  "initiatingActor": {
+    "id": "ff97686b-2e70-4c7d-b0c2-fce8b274ed00",
+    "displayName": "gagan046"
+  },
+  "logFiles": [
+    "https://storage.googleapis.com/eas-workflows-production/logs/f74ace9b-96c9-42fa-8271-cf6bc2233d8c/497a545c-4b89-49dd-a8ad-eb6898755c1b/2026-09-18T19%3A18%3A21Z-cab29d74-b51e-4df5-b865-581a43d7bbbc.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260919%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260919T051001Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=707c51f9358674d338c500eb8504088a2e5d596d2c10b5510e65031709ebb935dc5b870000b23b365e79e61cd69a926939c9ae99635bee899621bb2334d5ea10f03d3b844c54cf72a37949e4746b6ff4403ab39d69f274987b4b0b3467fa6f028e1b98c8d9d26fcd17c324a67d385f004287a4eb365940c3211224a3ef339fddd9b95ac35b495db7fb4fd646435b63a74deced89adb59e16966eb859c380f4319c4ec0100b3bde73b31315fc2787fe688e3e633641ec1f00bbf7810f94b436b19830c36937fb0b047ea6688880b1744e1f4f71eefcf81779bfa3835a9ccb9beb5673e532a4edabf10eef7443d21b1dee873bf7d5f92af9e61a43fffd38726f90"
+  ],
+  "app": {
+    "id": "f74ace9b-96c9-42fa-8271-cf6bc2233d8c",
+    "name": "lexishelf",
+    "slug": "lexishelf",
+    "ownerAccount": {
+      "id": "ea149b2c-8921-433a-97d2-8639fc60a03d",
+      "name": "gagan046"
+    }
+  },
+  "distribution": "INTERNAL",
+  "buildProfile": "preview",
+  "appIdentifier": "com.lexishelf.app",
+  "sdkVersion": "51.0.0",
+  "appVersion": "0.1.0",
+  "appBuildVersion": "1",
+  "gitCommitHash": "26d2382fa742153a6553ffeed0a7b795be0cbfd0",
+  "gitCommitMessage": "completed basic project building",
+  "priority": "NORMAL_PLUS",
+  "createdAt": "2026-09-18T19:18:17.417Z",
+  "updatedAt": "2026-09-18T19:23:11.978Z",
+  "completedAt": "2026-09-18T19:23:11.782Z",
+  "expirationDate": "2026-10-02T19:18:17.448Z",
+  "isForIosSimulator": false,
+  "metrics": {
+    "buildWaitTime": 3753,
+    "buildQueueTime": 5060,
+    "buildDuration": 285552
+  }
+}

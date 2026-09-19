@@ -18,6 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { collectionsApi } from "@/api/collections";
 import { getApiErrorMessage } from "@/api/client";
 import { vocabularyApi } from "@/api/vocabulary";
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { useThemeColors } from "@/theme/ThemeContext";
 import { speakText } from "@/utils/speech";
 import { Collection, VocabularyExplanation } from "@/types";
@@ -192,17 +193,17 @@ export function SearchScreen() {
         })}
       </View>
 
-      <Pressable
+      <AnimatedPressable
         accessibilityRole="button"
         disabled={!query.trim() || isLoading}
         onPress={() => void requestExplanation()}
-        style={({ pressed }) => [
+        style={[
           styles.primaryButton,
-          { backgroundColor: colors.primary, opacity: !query.trim() || isLoading ? 0.45 : pressed ? 0.78 : 1 },
+          { backgroundColor: colors.primary, opacity: !query.trim() || isLoading ? 0.45 : 1 },
         ]}
       >
         {isLoading ? <ActivityIndicator color={colors.onPrimary} /> : <Text style={[styles.primaryButtonText, { color: colors.onPrimary }]}>Explain</Text>}
-      </Pressable>
+      </AnimatedPressable>
 
       {error ? <Text style={[styles.feedback, { color: colors.danger }]}>{error}</Text> : null}
 
@@ -322,17 +323,17 @@ export function SearchScreen() {
             </Pressable>
           )}
 
-          <Pressable
+          <AnimatedPressable
             accessibilityRole="button"
             disabled={!selectedCollectionId || isSaving}
             onPress={() => void saveExplanation()}
-            style={({ pressed }) => [
+            style={[
               styles.saveButton,
-              { borderColor: colors.primary, opacity: !selectedCollectionId || isSaving ? 0.45 : pressed ? 0.7 : 1 },
+              { borderColor: colors.primary, opacity: !selectedCollectionId || isSaving ? 0.45 : 1 },
             ]}
           >
             <Text style={[styles.saveButtonText, { color: colors.primary }]}>{isSaving ? "Saving..." : "Save word"}</Text>
-          </Pressable>
+          </AnimatedPressable>
           {saveMessage ? (
             <View style={styles.saveFeedback}>
               <Ionicons

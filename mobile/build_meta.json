@@ -1,0 +1,41 @@
+﻿{
+  "id": "497a545c-4b89-49dd-a8ad-eb6898755c1b",
+  "status": "ERRORED",
+  "platform": "ANDROID",
+  "error": {
+    "errorCode": "EAS_BUILD_UNKNOWN_GRADLE_ERROR",
+    "message": "Gradle build failed with unknown error. See logs for the \"Run gradlew\" phase for more information."
+  },
+  "artifacts": {},
+  "initiatingActor": {
+    "id": "ff97686b-2e70-4c7d-b0c2-fce8b274ed00",
+    "displayName": "gagan046"
+  },
+  "project": {
+    "id": "f74ace9b-96c9-42fa-8271-cf6bc2233d8c",
+    "name": "lexishelf",
+    "slug": "lexishelf",
+    "ownerAccount": {
+      "id": "ea149b2c-8921-433a-97d2-8639fc60a03d",
+      "name": "gagan046"
+    }
+  },
+  "distribution": "INTERNAL",
+  "buildProfile": "preview",
+  "sdkVersion": "51.0.0",
+  "appVersion": "0.1.0",
+  "appBuildVersion": "1",
+  "gitCommitHash": "26d2382fa742153a6553ffeed0a7b795be0cbfd0",
+  "gitCommitMessage": "completed basic project building",
+  "priority": "NORMAL_PLUS",
+  "createdAt": "2026-09-18T19:18:17.417Z",
+  "updatedAt": "2026-09-18T19:23:11.978Z",
+  "completedAt": "2026-09-18T19:23:11.782Z",
+  "expirationDate": "2026-10-02T19:18:17.448Z",
+  "isForIosSimulator": false,
+  "metrics": {
+    "buildWaitTime": 3753,
+    "buildQueueTime": 5060,
+    "buildDuration": 285552
+  }
+}

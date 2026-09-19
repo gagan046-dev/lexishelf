@@ -63,7 +63,7 @@ class VocabularyAgentRunner:
             model=f"groq/{self.model}",
             api_key=self.api_key,
             temperature=self.temperature,
-            timeout=30,
+            timeout=45,
             max_tokens=1200,
         )
         agent = Agent(

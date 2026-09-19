@@ -6,9 +6,25 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": ["**/*"],
-    "ios": { "supportsTablet": true },
-    "android": {},
-    "plugins": []
+    "splash": {
+      "backgroundColor": "#0B0F1A",
+      "resizeMode": "contain"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lexishelf.app"
+    },
+    "android": {
+      "package": "com.lexishelf.app"
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "f74ace9b-96c9-42fa-8271-cf6bc2233d8c"
+      }
+    }
   }
 }

@@ -16,6 +16,8 @@ import {
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import * as ExpoLinking from "expo-linking";
+import * as WebBrowser from "expo-web-browser";
 
 import { collectionsApi } from "@/api/collections";
 import { ApiError, getApiErrorMessage } from "@/api/client";
@@ -151,8 +153,8 @@ export function CollectionsScreen() {
         COLLECTION_DRAFT_KEY,
         JSON.stringify({ name, description, themeId } satisfies CollectionDraft),
       );
-      const result = await notionApi.authorizationUrl();
       if (Platform.OS === "web") {
+        const result = await notionApi.authorizationUrl();
         const popup = window.open(
           result.authorization_url,
           "lexishelf-notion-oauth",
@@ -171,9 +173,19 @@ export function CollectionsScreen() {
           setNotionMessage("Finish connecting in the Notion window. Your draft is safe here.");
           return;
         }
+        await Linking.openURL(result.authorization_url);
+        setNotionMessage("Complete authorization, then return here. Your draft is saved.");
+        return;
       }
-      await Linking.openURL(result.authorization_url);
-      setNotionMessage("Complete authorization, then return here. Your draft is saved.");
+
+      const redirectUrl = ExpoLinking.createURL("notion-callback");
+      const result = await notionApi.authorizationUrl(redirectUrl);
+      const authResult = await WebBrowser.openAuthSessionAsync(result.authorization_url, redirectUrl);
+      if (authResult.type === "success") {
+        await loadNotionPages(true);
+      } else {
+        setNotionMessage("Complete authorization, then return here. Your draft is saved.");
+      }
     } catch (notionError) {
       setNotionMessage(getApiErrorMessage(notionError, "Could not start Notion authorization."));
     }

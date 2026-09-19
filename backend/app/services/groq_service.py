@@ -35,7 +35,7 @@ class GroqVocabularyService:
         self.temperature = temperature
         self.client = client or Groq(
             api_key=api_key,
-            timeout=15.0,
+            timeout=40.0,
             max_retries=2,
             http_client=httpx.Client(
                 verify=truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT),
@@ -59,7 +59,7 @@ class GroqVocabularyService:
             completion = self.client.chat.completions.create(
                 model=self.model,
                 temperature=self.temperature,
-                max_tokens=900,
+                max_tokens=1600,
                 response_format={"type": "json_object"},
                 messages=[
                     {

@@ -20,7 +20,13 @@ const actionableMessages: Record<string, string> = {
   GROQ_UNAVAILABLE: "The explanation service is temporarily unreachable. Try again shortly.",
   GROQ_RATE_LIMITED: "The explanation service is busy. Wait a moment, then try again.",
   GROQ_INVALID_RESPONSE: "The explanation was incomplete. Please try the word again.",
+  GROQ_EMPTY_RESPONSE: "The explanation was incomplete. Please try the word again.",
+  GROQ_TIMEOUT: "The server is waking up or busy. Please try again in a few seconds.",
+  GROQ_REQUEST_FAILED: "The explanation service is temporarily unavailable. Try again shortly.",
   AGENT_NOT_CONFIGURED: "Agent Chat is not configured on the server.",
+  AGENT_RUNTIME_UNAVAILABLE: "Agent Chat is temporarily unavailable on the server.",
+  AGENT_EXECUTION_FAILED: "The assistant is busy or waking up. Please try again in a few seconds.",
+  AGENT_EMPTY_RESPONSE: "The assistant did not return a response. Please try again.",
 };
 
 export function getApiErrorMessage(error: unknown, fallback: string): string {

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 import { useAuth } from "@/auth/AuthContext";
 import { AgentChatScreen } from "@/screens/AgentChatScreen";
@@ -42,6 +43,22 @@ const tabIcons: Record<keyof MainTabParamList, keyof typeof Ionicons.glyphMap> =
   ThemeSelector: "color-palette-outline",
 };
 
+function AnimatedTabIcon({ name, color, size, focused }: { name: keyof typeof Ionicons.glyphMap; color: string; size: number; focused: boolean }) {
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = withSpring(focused ? 1.15 : 1, { damping: 10, stiffness: 180 });
+  }, [focused, scale]);
+
+  const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <Ionicons name={name} color={color} size={size} />
+    </Animated.View>
+  );
+}
+
 function MainTabs() {
   const { theme } = useTheme();
   const colors = theme.colors;
@@ -61,8 +78,8 @@ function MainTabs() {
           paddingBottom: 8,
           paddingTop: 7,
         },
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name={tabIcons[route.name]} color={color} size={size} />
+        tabBarIcon: ({ color, size, focused }) => (
+          <AnimatedTabIcon name={tabIcons[route.name]} color={color} size={size} focused={focused} />
         ),
       })}
     >
